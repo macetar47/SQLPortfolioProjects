@@ -53,6 +53,41 @@ WHERE continent is not null
 GROUP BY location
 ORDER BY TotalDeathCount DESC
 
+--Creating View--
+
+CREATE VIEW DeathPerCountry AS 
+SELECT Location, MAX(Cast(Total_deaths AS INT)) AS TotalDeathCount
+FROM CovidDeaths
+WHERE continent is not null
+Group By location
+
+SELECT Location, TotalDeathCount AS TotalDeaths
+FROM DeathPerCountry
+ORDER BY TotalDeathCount DESC
+
+--Deaths Per Continent with Drill Down Effect for Future Visualization
+
+SELECT Continent, SUM(MaxTotalDeathCount) AS TotalDeaths
+FROM (SELECT Continent, MAX(Cast(Total_deaths AS INT)) AS MaxTotalDeathCount
+FROM CovidDeaths
+WHERE continent is not null
+GROUP BY Continent, Location) AS MaxTotalDeathCounts
+GROUP BY Continent
+ORDER BY TotalDeaths DESC
+
+--Creating View--
+
+CREATE VIEW TotalDeathsPerContinent AS 
+SELECT Continent, SUM(MaxTotalDeathCount) AS TotalDeaths
+FROM (SELECT Continent, MAX(Cast(Total_deaths AS INT)) AS MaxTotalDeathCount
+FROM CovidDeaths
+WHERE continent is not null
+GROUP BY Continent, Location) AS MaxTotalDeathCounts
+GROUP BY Continent
+
+SELECT Continent, TotalDeaths
+FROM TotalDeathsPerContinent
+ORDER BY TotalDeaths DESC
 
 
 --GLOBAL Numbers--
