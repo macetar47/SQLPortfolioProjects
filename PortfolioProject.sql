@@ -163,7 +163,7 @@ SELECT *, (RollingPeopleVaccinated/Population)*100 AS PercentVaccinated
 FROM PercentPopulationVaccinated
 
 
---Temp Table with Drill Down Effect for Total Deaths per Continent--
+--Total Deaths per Continent with Temp Table--
 
 DROP TABLE IF EXISTS #TotalDeathsPerContinent
 CREATE TABLE #TotalDeathsPerContinent
